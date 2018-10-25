@@ -8,6 +8,8 @@ from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler 
 
 PROBE_RESULT_DIR = os.path.join(__file__, "probe_result")
+PYTHON_PROBE = "pyprobe"
+JAVA_PROBE = "javaprobe"
 
 class ProjectType(Enum):
     PYTHON = auto()
@@ -20,9 +22,14 @@ postfix_project_type_mapping = {
         "java"      :   ProjectType.JAVA,
         }
 
+project_type_injector_name_mapping = {
+        ProjectType.PYTHON  :   PYTHON_PROBE,
+        ProjectType.JAVA    :   JAVA_PROBE,
+        }
+
 project_type_injector_mapping = {
-        ProjectType.PYTHON  :   os.path.join(__file__, "injector", "pyprobe"),
-        ProjectType.JAVA    :   os.path.join(__file__, "injector", "javaprobe"),
+        ProjectType.PYTHON  :   os.path.join(__file__, "injector", PYTHON_PROBE),
+        ProjectType.JAVA    :   os.path.join(__file__, "injector", JAVA_PROBE),
         }
 
 
@@ -103,6 +110,10 @@ if __name__ == '__main__':
             prev_time = now_time
     except KeyboardInterrupt:
         observer.stop()
+        try:
+            rmtree(os.path.join(inject_target_path, project_type_injector_name_mapping[project_type]))
+        except:
+            print("The probe is not removed, please remove it manually")
 
     observer.join()
 
