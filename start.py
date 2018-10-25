@@ -12,7 +12,6 @@ from geopandas import GeoSeries
 from utils.local_utils import list_files_recursively, get_project_type
 from config.local_config import *
 
-
 def process(filepath):
     if os.path.getsize(filepath) > 0:
         with open(filepath, 'rb') as fp:
@@ -28,7 +27,6 @@ def render_one_by_one(data_content):
         for data in data_content:
             GeoSeries(data).plot(ax=plt.gca())
             plt.show()
-
 
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
