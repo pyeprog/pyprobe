@@ -1,1 +1,3 @@
-watchdog
+watchgod
+matplotlib
+geopandas
