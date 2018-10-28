@@ -1,6 +1,7 @@
 import os
 import sys
 import _pickle as pkl
+import argparse
 import matplotlib.pyplot as plt
 from time import time, sleep
 from enum import Enum, auto
@@ -28,11 +29,16 @@ def render_one_by_one(data_content):
             GeoSeries(data).plot(ax=plt.gca())
             plt.show()
 
-if __name__ == '__main__':
-    if len(sys.argv) <= 1:
-        raise ValueError("injection path is not specified")
 
-    inject_target_dir = os.path.expanduser(sys.argv[1])
+def main():
+    parser = argparse.ArgumentParser(description="An omni-debugger")
+    parser.add_argument("-t", "--target", type=str, help="The project path for debug")
+    args = dict(vars(parser.parse_args()).copy())
+    
+    if args.target is None:
+        raise ValueError("injection target path is not specified")
+
+    inject_target_dir = os.path.expanduser(args.target)
     if not os.path.isdir(inject_target_dir):
         raise ValueError("Invalid injection path")
 
@@ -66,3 +72,6 @@ if __name__ == '__main__':
         except:
             print("The probe is not removed, please remove it manually")
 
+
+if __name__ == '__main__':
+    main()
