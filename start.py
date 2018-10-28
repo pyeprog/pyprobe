@@ -4,14 +4,13 @@ import _pickle as pkl
 import argparse
 import matplotlib.pyplot as plt
 from time import time, sleep
-from enum import Enum, auto
 from shutil import copytree, rmtree
 from collections import Counter
 from watchgod import watch, Change
 from geopandas import GeoSeries
 
-from utils.local_utils import list_files_recursively, get_project_type
 from config.local_config import *
+from utils.local_utils import list_files_recursively, get_project_type
 
 def process(filepath):
     if os.path.getsize(filepath) > 0:
@@ -35,10 +34,10 @@ def main():
     parser.add_argument("-t", "--target", type=str, help="The project path for debug")
     args = dict(vars(parser.parse_args()).copy())
     
-    if args.target is None:
+    if args["target"] is None:
         raise ValueError("injection target path is not specified")
 
-    inject_target_dir = os.path.expanduser(args.target)
+    inject_target_dir = os.path.expanduser(args["target"])
     if not os.path.isdir(inject_target_dir):
         raise ValueError("Invalid injection path")
 

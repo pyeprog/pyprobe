@@ -1,5 +1,8 @@
 import os
+
+from config.local_config import *
 from collections import Counter
+
 
 def list_files_recursively(path):
     if not os.path.isdir(path):

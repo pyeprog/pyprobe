@@ -1,10 +1,16 @@
 import os
+from enum import Enum, unique
 
 
 PYTHON_PROBE = "pyprobe"
 JAVA_PROBE = "javaprobe"
 PROBE_RESULT_DIR = os.path.join(os.path.realpath("."), "probe_result")
 
+@unique
+class ProjectType(Enum):
+    PYTHON = 1
+    JAVA = 2
+    NONE = 3
 
 postfix_project_type_mapping = {
         "py"        :   ProjectType.PYTHON,
@@ -23,7 +29,3 @@ project_type_injector_mapping = {
         }
 
 
-class ProjectType(Enum):
-    PYTHON = auto()
-    JAVA = auto()
-    NONE = auto()
